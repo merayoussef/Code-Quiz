@@ -53,6 +53,7 @@ startButton.addEventListener("click", function(){
             clearInterval(timer);
         } 
     }, 1000); 
+    
 startDiv.setAttribute("style", "display:none;")
 displayCurrentQuestion ();
 })
@@ -91,7 +92,7 @@ questionDiv.appendChild(answerOl)
 
 function getnextQuestion() {
     currentQuestion++;
-    if (currentQuestion > question.length) {
+    if (currentQuestion === questions.length) {
      goToResultPage();
     } else {
     displayCurrentQuestion();
@@ -115,12 +116,10 @@ getnextQuestion()
 
 function goToResultPage() {
 
-   // if (clock == timer.length[0] || currentQuestion < question.length) {
-    //    document.getElementById("results").textContent = "Game Over!"
-    //}
-
 }
 
 function displayHighScore() {
 
+var highScore = JSON.parse(window.localStorage.getItem("highscore"))
+highScore.getAttribute("highscores");
 }
