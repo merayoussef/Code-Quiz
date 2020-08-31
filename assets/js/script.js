@@ -43,14 +43,13 @@ var currentQuestion = 0;
 var startButton = document.querySelector("#startButton");
 var startDiv = document.querySelector("#start");
 var questionDiv = document.querySelector("#question");
-var clock = questions.length * 10 ;
-
+var clock = questions.length * 5 ;
 
 startButton.addEventListener("click", function(){
     var timer = setInterval(function(){ 
         document.querySelector("#clock").textContent = clock
         clock--;
-        if (clock <= 0){
+        if (clock < 0){
             clearInterval(timer);
         } 
     }, 1000); 
@@ -64,25 +63,26 @@ function displayCurrentQuestion() {
 var question = questions[currentQuestion];
 questionDiv.innerHTML = "";
 
+var correctAnswer = question.correctAnswer
+
 //display questions
 var questionHeading = document.createElement("h3");
 questionHeading.textContent = 
 question.question;
 questionDiv.appendChild(questionHeading);
 
+
 //display answers
 var answerOl = document.createElement("ol");
 for (var i = 0; i <question.answers.length; i++) {
     answerLi = document.createElement("li");
-    console.log(question.answers[i])
     answerLi.textContent = question.answers[i];
     answerLi.setAttribute("answerOl", question.answers[i])
-    answerLi.setAttribute("answerIndex", i+1)
+    answerLi.setAttribute("data-answerIndex", i)
     answerLi.setAttribute("style", "border:5px solid DarkGray; background-color:DarkGray; padding:20px; width:40%; margin:50px; border-radius:25px")
     answerOl.appendChild(answerLi);
-    console.log(answerLi)
     answerLi.addEventListener("click", function(e) {
-        handleAnswerSelection(e.target.getAttribute("answerIndex"))
+        handleAnswerSelection(e.target.getAttribute("data-answerIndex"), correctAnswer)
     })
 }
 questionDiv.appendChild(answerOl)
@@ -98,12 +98,29 @@ function getnextQuestion() {
     }
 }
 
-function handleAnswerSelection () {
-  
-    //build the array of answers 
-    
+function handleAnswerSelection (userAnswer, correctAnswer) {
+
+    if (userAnswer == correctAnswer) {
+    // display "correct"
+    document.getElementById("feedback").textContent = "Correct!";
+    } else { 
+    // deduct time
+    clock-=5
+    document.getElementById("feedback").textContent = "Incorrect!"
+    }
+
+getnextQuestion()
+
 }
 
 function goToResultPage() {
+
+   // if (clock == timer.length[0] || currentQuestion < question.length) {
+    //    document.getElementById("results").textContent = "Game Over!"
+    //}
+
+}
+
+function displayHighScore() {
 
 }
